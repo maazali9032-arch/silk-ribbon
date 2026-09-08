@@ -1,0 +1,152 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * ZAR V2 — Ribbon / Silk Formation design system.
+ * Palette: silk ivory, champagne, dusty rose, warm gold.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-silk: var(--silk);
+  --color-champagne: var(--champagne);
+  --color-rose: var(--rose);
+  --color-rose-deep: var(--rose-deep);
+  --color-gold: var(--gold);
+  --color-ink: var(--ink);
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Jost", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.5rem;
+
+  --silk: oklch(0.972 0.012 70);
+  --champagne: oklch(0.9 0.035 72);
+  --rose: oklch(0.855 0.045 20);
+  --rose-deep: oklch(0.66 0.09 18);
+  --gold: oklch(0.76 0.09 78);
+  --ink: oklch(0.33 0.03 30);
+
+  --background: oklch(0.968 0.014 60);
+  --foreground: var(--ink);
+  --card: oklch(0.985 0.008 70);
+  --card-foreground: var(--ink);
+  --popover: oklch(0.985 0.008 70);
+  --popover-foreground: var(--ink);
+  --primary: var(--rose-deep);
+  --primary-foreground: oklch(0.99 0.005 70);
+  --secondary: oklch(0.93 0.02 40);
+  --secondary-foreground: var(--ink);
+  --muted: oklch(0.94 0.015 55);
+  --muted-foreground: oklch(0.52 0.03 30);
+  --accent: var(--champagne);
+  --accent-foreground: var(--ink);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.99 0.005 70);
+  --border: oklch(0.88 0.025 45);
+  --input: oklch(0.88 0.025 45);
+  --ring: var(--gold);
+
+  --gradient-silk: linear-gradient(
+    160deg,
+    oklch(0.975 0.012 70) 0%,
+    oklch(0.945 0.024 40) 45%,
+    oklch(0.955 0.02 65) 100%
+  );
+  --shadow-silk: 0 24px 60px -30px color-mix(in oklab, var(--rose-deep) 45%, transparent);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--gradient-silk) fixed;
+    color: var(--color-foreground);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 300;
+  }
+}
+
+@utility zar-eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--ink) 62%, transparent);
+}
+
+@utility zar-card {
+  background: color-mix(in oklab, var(--card) 78%, transparent);
+  backdrop-filter: blur(6px);
+  border: 1px solid color-mix(in oklab, var(--gold) 34%, transparent);
+  box-shadow: var(--shadow-silk);
+}
+
+@utility zar-gold-rule {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--gold) 80%, transparent),
+    transparent
+  );
+}
+
+@keyframes zar-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
