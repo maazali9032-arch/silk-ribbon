@@ -12,6 +12,7 @@ import {
 import { Ornament, RibbonCorner, RibbonFrame, SilkField } from "./Ribbon";
 import { Section } from "./Section";
 import { BrandTicker } from "./BrandTicker";
+import defaultMusicUrl from "@/leberch-romantic-584475.mp3";
 
 const ext = { target: "_blank", rel: "noopener noreferrer" } as const;
 
@@ -193,32 +194,56 @@ function Rsvp() {
   );
 }
 
-function MusicToggle({ url }: { url: string }) {
+function MusicToggle({ url }: { url?: string }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState(false);
+  const wasPlayingRef = useRef(false);
 
   useEffect(() => {
     const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        if (!audio.paused) {
+          wasPlayingRef.current = true;
+          audio.pause();
+        }
+      } else {
+        if (wasPlayingRef.current) {
+          wasPlayingRef.current = false;
+          void audio.play().catch(() => {});
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
-      audio?.pause();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      audio.pause();
     };
   }, []);
 
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (playing) {
+      void audio.play().catch(() => setPlaying(false));
+    } else {
+      audio.pause();
+    }
+  }, [playing]);
+
+  const musicSource = url || defaultMusicUrl;
+
   return (
     <>
-      <audio ref={audioRef} src={url} loop preload="none" />
+      <audio ref={audioRef} src={musicSource} loop preload="none" />
       <button
         type="button"
-        onClick={() => {
-          const audio = audioRef.current;
-          if (!audio) return;
-          if (playing) {
-            audio.pause();
-            setPlaying(false);
-          } else {
-            void audio.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
-          }
-        }}
+        onClick={() => setPlaying(!playing)}
         className="zar-card zar-eyebrow fixed right-4 top-4 z-40 rounded-full px-3 py-2"
       >
         {playing ? "Pause music" : "Play music"}
@@ -248,7 +273,7 @@ export function InvitationView({ payload }: { payload: ZarPayload }) {
   return (
     <div ref={openingRef} className="relative">
       <BrandTicker brandName={payload.brandName} />
-      {c.music_enabled && c.music_url && <MusicToggle url={c.music_url} />}
+      {c.music_enabled && <MusicToggle url={c.music_url || undefined} />}
 
       <Opening
         onBegin={() =>
@@ -423,14 +448,6 @@ export function InvitationView({ payload }: { payload: ZarPayload }) {
                 </div>
               );
             })}
-          </div>
-        </Section>
-      )}
-
-      {payload.publicUrl && (
-        <Section eyebrow={c.qr_label ?? "Share this invitation"}>
-          <div className="zar-card mx-auto w-fit rounded-2xl p-6">
-            <QRCodeSVG value={payload.publicUrl} size={140} bgColor="transparent" fgColor="#4a382f" />
           </div>
         </Section>
       )}
