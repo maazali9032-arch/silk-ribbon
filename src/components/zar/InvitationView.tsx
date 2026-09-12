@@ -196,7 +196,7 @@ function Rsvp() {
 
 function MusicToggle({ url }: { url?: string }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [playing, setPlaying] = useState(false);
+  const [playing, setPlaying] = useState(true);
   const wasPlayingRef = useRef(false);
 
   useEffect(() => {

@@ -14,7 +14,7 @@ export function BrandTicker({ brandName }: { brandName?: string | null }) {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-x-0 top-[70svh] z-30 flex justify-center px-2"
+      className="pointer-events-none fixed inset-x-0 bottom-0 z-30 flex justify-center px-2"
     >
       <div
         className="w-full max-w-3xl overflow-hidden rounded-full border py-[0.25vh]"
