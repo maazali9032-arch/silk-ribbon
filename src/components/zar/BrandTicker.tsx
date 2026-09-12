@@ -5,8 +5,12 @@
  * hardcoded and never queried from a shop table by this design.
  */
 export function BrandTicker({ brandName }: { brandName?: string | null }) {
-  const name = brandName?.trim();
-  if (!name) return null;
+  const name = brandName?.trim() ?? "ZAR";
+  // always render ticker, even if brandName missing
+  useEffect(() => {
+    console.log("BrandTicker rendered with name:", name);
+  }, []);
+
 
   const cell = `${name}  ·  Crafting beautiful beginnings  ·  `;
   const run = cell.repeat(6);
