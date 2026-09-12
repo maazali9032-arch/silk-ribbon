@@ -160,6 +160,8 @@ export function brandName(payload: ZarPayload): string | null {
   return payload.brandName;
 }
 
+/** Fetch invitation payload from Supabase */
+export async function fetchInvitation(slug: string): Promise<ZarPayload> {
   const supabase = getSupabase();
   if (!supabase || !isSupabaseConfigured) {
     throw new Error("config");
