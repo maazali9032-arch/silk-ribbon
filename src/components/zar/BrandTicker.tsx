@@ -3,9 +3,11 @@
  * pointer-events-none, floating near the 70% viewport-height mark.
  * The brand name is data-driven — it comes from the public RPC payload only.
  */
+import { useEffect } from "react";
 export function BrandTicker({ brandName }: { brandName?: string | null }) {
-  const name = brandName?.trim();
-  if (!name) return null;
+  const name = brandName?.trim() ?? "ZAR";
+  // always render ticker, even if brandName missing
+
 
   const unit = (
     <span className="zar-eyebrow mx-4 inline-flex items-center gap-3 whitespace-nowrap text-zar-cream/70">
