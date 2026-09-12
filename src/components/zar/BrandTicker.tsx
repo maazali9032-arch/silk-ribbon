@@ -5,8 +5,8 @@
  */
 import { useEffect } from "react";
 export function BrandTicker({ brandName }: { brandName?: string | null }) {
-  const name = brandName?.trim() ?? "ZAR";
-  // always render ticker, even if brandName missing
+  const name = brandName?.trim();
+  if (!name) return null;
 
 
   const unit = (

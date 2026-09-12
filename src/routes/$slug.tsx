@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { fetchInvitation, readSlug } from "@/lib/zar/invitation";
 import { InvitationView } from "@/components/zar/InvitationView";
+import { BrandTicker } from "@/components/zar/BrandTicker";
 import { ErrorState, FallbackState, LoadingState, NotFoundState } from "@/components/zar/States";
 
 export const Route = createFileRoute("/$slug")({
@@ -56,6 +57,7 @@ function InvitationRoute() {
 
   return (
     <main>
+      <BrandTicker brandName={payload.brandName} />
       <InvitationView payload={payload} />
     </main>
   );
