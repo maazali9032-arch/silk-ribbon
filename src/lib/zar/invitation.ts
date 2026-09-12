@@ -123,10 +123,28 @@ export function normalizePayload(raw: unknown): ZarPayload {
 
   const fallbackRaw = (pick(root, ["fallback", "fallback_content"]) as Record<string, unknown>) ?? null;
 
+  // Primary brand name candidates from top‑level fields
+  let finalBrandName: string | null = typeof brandName === "string" ? brandName : null;
+
+  // Fallback to nested shop fields if still empty
+  if (!finalBrandName) {
+    const rootObj = root as any;
+    const shop = rootObj?.shop;
+    if (shop) {
+      finalBrandName = shop.display_name ?? shop.name ?? null;
+    }
+  }
+
+  // Final fallback to fallback.display_name (if present)
+  if (!finalBrandName) {
+    const fallbackObj = root as any;
+    finalBrandName = fallbackObj?.fallback?.display_name ?? null;
+  }
+
   return {
     state,
     content: state === "live" ? ((contentRaw as ZarContent | null) ?? null) : null,
-    brandName: typeof brandName === "string" ? brandName : null,
+    brandName: finalBrandName,
     publicUrl: typeof publicUrl === "string" ? publicUrl : null,
     fallback: fallbackRaw
       ? {

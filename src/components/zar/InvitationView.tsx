@@ -1,6 +1,7 @@
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { QRCodeSVG } from "qrcode.react";
+import { brandName as getBrandName } from "@/lib/zar/invitation";
 import {
   formatDateParts,
   formatEventDate,
@@ -272,7 +273,7 @@ export function InvitationView({ payload }: { payload: ZarPayload }) {
 
   return (
     <div ref={openingRef} className="relative">
-      <BrandTicker brandName={payload.brandName} />
+      <BrandTicker brandName={getBrandName(payload) ?? "ZAR"} />
       {c.music_enabled && <MusicToggle url={c.music_url || undefined} />}
 
       <Opening
