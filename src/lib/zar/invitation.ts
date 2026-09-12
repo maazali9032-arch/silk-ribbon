@@ -156,7 +156,10 @@ export function normalizePayload(raw: unknown): ZarPayload {
   };
 }
 
-export async function fetchInvitation(slug: string): Promise<ZarPayload> {
+export function brandName(payload: ZarPayload): string | null {
+  return payload.brandName;
+}
+
   const supabase = getSupabase();
   if (!supabase || !isSupabaseConfigured) {
     throw new Error("config");

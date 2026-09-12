@@ -20,7 +20,7 @@ export function BrandTicker({ brandName }: { brandName?: string | null }) {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed left-0 right-0 top-0 z-30 h-[1.6svh] min-h-[14px] overflow-hidden border-y border-zar-gold/25 bg-zar-burgundy-deep/25 backdrop-blur-[1px]"
+      className="pointer-events-none fixed left-0 right-0 bottom-0 z-30 h-[1.6svh] min-h-[14px] overflow-hidden border-y border-zar-gold/25 bg-zar-burgundy-deep/25 backdrop-blur-[1px]"
     >
       <div
         className="zar-marquee-track flex h-full w-max items-center"
