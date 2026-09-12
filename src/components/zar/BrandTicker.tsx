@@ -1,42 +1,40 @@
 /**
- * Global floating shop/brand strip.
- * Tiny, semi-transparent, pointer-events-safe, sitting around 70% of viewport
- * height. The brand name is data-driven (from the public RPC payload) — never
- * hardcoded and never queried from a shop table by this design.
+ * Global floating brand strip. Intentionally tiny, semi-transparent and
+ * pointer-events-none, floating near the 70% viewport-height mark.
+ * The brand name is data-driven — it comes from the public RPC payload only.
  */
 export function BrandTicker({ brandName }: { brandName?: string | null }) {
-  const name = brandName?.trim() ?? "ZAR";
-  // always render ticker, even if brandName missing
-  useEffect(() => {
-    console.log("BrandTicker rendered with name:", name);
-  }, []);
+  const name = brandName?.trim();
+  if (!name) return null;
 
-
-  const cell = `${name}  ·  Crafting beautiful beginnings  ·  `;
-  const run = cell.repeat(6);
+  const unit = (
+    <span className="zar-eyebrow mx-4 inline-flex items-center gap-3 whitespace-nowrap text-zar-cream/70">
+      {name}
+      <span className="text-zar-saffron/80">✦</span>
+      <span className="text-zar-cream/50">MADE WITH LOVE</span>
+      <span className="text-zar-saffron/80">✦</span>
+    </span>
+  );
 
   return (
     <div
-      aria-hidden="true"
-      className="pointer-events-none fixed inset-x-0 bottom-0 z-30 flex justify-center px-2"
+      aria-hidden
+      className="pointer-events-none fixed left-0 right-0 bottom-0 z-30 h-[1.6svh] min-h-[14px] overflow-hidden border-y border-zar-gold/25 bg-zar-burgundy-deep/25 backdrop-blur-[1px]"
     >
       <div
-        className="w-full max-w-3xl overflow-hidden rounded-full border py-[0.25vh]"
-        style={{
-          borderColor: "color-mix(in oklab, var(--gold) 32%, transparent)",
-          background: "color-mix(in oklab, var(--silk) 26%, transparent)",
-          backdropFilter: "blur(2px)",
-          boxShadow: "0 0 18px -8px color-mix(in oklab, var(--gold) 60%, transparent)",
-          minHeight: "1.1vh",
-        }}
+        className="zar-marquee-track flex h-full w-max items-center"
+        style={{ animation: "zar-marquee 26s linear infinite" }}
       >
-        <div
-          className="flex w-max whitespace-nowrap will-change-transform"
-          style={{ animation: "zar-marquee 42s linear infinite" }}
-        >
-          <span className="zar-eyebrow px-2 text-[0.55rem] leading-[1.4] opacity-70">{run}</span>
-          <span className="zar-eyebrow px-2 text-[0.55rem] leading-[1.4] opacity-70">{run}</span>
-        </div>
+        <span className="flex">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <span key={`a${i}`}>{unit}</span>
+          ))}
+        </span>
+        <span className="flex">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <span key={`b${i}`}>{unit}</span>
+          ))}
+        </span>
       </div>
     </div>
   );
