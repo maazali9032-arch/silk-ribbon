@@ -273,6 +273,12 @@ export function InvitationView({ payload }: { payload: ZarPayload }) {
 
   return (
     <div ref={openingRef} className="relative">
+      <img
+        src="/decorative-frame.webp"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 z-40 hidden h-full w-full object-fill max-[684px]:block"
+      />
       <BrandTicker brandName={getBrandName(payload) ?? "ZAR"} />
       {c.music_enabled && <MusicToggle url={c.music_url || undefined} />}
 
